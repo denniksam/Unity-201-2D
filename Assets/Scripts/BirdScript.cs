@@ -12,8 +12,8 @@ public class BirdScript : MonoBehaviour
     void Start()
     {
         body = this.GetComponent<Rigidbody2D>();
+        GameState.pipesPassed = 0;
     }
-
 
     void Update()
     {
@@ -27,7 +27,6 @@ public class BirdScript : MonoBehaviour
             body.AddForce(Vector2.up * continualForceFactor * Time.deltaTime);
         }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Debug.Log("Collision detected: " +  collision.gameObject.name);
@@ -35,6 +34,15 @@ public class BirdScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Debug.Log("Trigger detected: " + collision.gameObject.name);
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Debug.Log(other.gameObject.tag);
+        if (other.gameObject.CompareTag("Pipe"))
+        {
+            GameState.pipesPassed += 1;
+
+        }
     }
 }
 /* З точки зору взаємодії між собою колайдери поділяються на фізичні та тригери
